@@ -4,9 +4,9 @@ class Account:
         self.last_name = last_name
         self.balance = balance
         self.kod = kod
-        if isinstance(pesel,str) and len(pesel)!=11:
+        if isinstance(pesel,str) and len(pesel) != 11:
             self.pesel = "Invalid"
         else:
             self.pesel = pesel
-        if isinstance(kod,str) and kod.startswith("PROM_"):
-            self.balance+=50
+        if isinstance(kod,str) and kod.startswith("PROM_") and self.pesel != "Invalid" and (int(self.pesel[:2]) > 60 or int(self.pesel[:2]) <= 7):
+            self.balance += 50
