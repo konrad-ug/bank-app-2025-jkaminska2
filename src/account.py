@@ -10,3 +10,6 @@ class Account:
             self.pesel = pesel
         if isinstance(kod,str) and kod.startswith("PROM_") and self.pesel != "Invalid" and (int(self.pesel[:2]) > 60 or int(self.pesel[:2]) <= 7):
             self.balance += 50
+    def transfer(self, kwota):
+        if kwota + self.balance >= 0:
+            self.balance += kwota

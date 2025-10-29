@@ -22,3 +22,10 @@ class TestAccount:
     def test_senior(self):
         account2 = Account("Jane", "Doe", "50857264539", "PROM_fjds")
         assert account2.balance == 0
+class TestTransfer:
+    def test_transfer(self):
+        account = Account("John", "Doe", "93857264539",None, 5000)
+        account.transfer(500)
+        assert account.balance == 5500
+        account.transfer(-5600)
+        assert account.balance == 5500
