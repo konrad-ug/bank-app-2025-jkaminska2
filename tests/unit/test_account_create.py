@@ -1,4 +1,4 @@
-from src.account import Account
+from src.account import Account, BusinessAccount
 
 class TestAccount:
     def test_account_creation(self):
@@ -29,3 +29,9 @@ class TestTransfer:
         assert account.balance == 5500
         account.transfer(-5600)
         assert account.balance == 5500
+class TestBusinessAccount:
+    def test_account(self):
+        bus_account = BusinessAccount("Nazwa_firmy", "594837236", 800)
+        assert bus_account.nip == "Invalid"
+        bus_account.transfer(-500)
+        assert bus_account.balance == 300

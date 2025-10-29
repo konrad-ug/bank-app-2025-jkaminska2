@@ -13,3 +13,14 @@ class Account:
     def transfer(self, kwota):
         if kwota + self.balance >= 0:
             self.balance += kwota
+class BusinessAccount:
+    def __init__(self, company_name, nip, balance = 0):
+        self.company_name = company_name
+        self.balance = balance
+        if len(nip) != 10:
+            self.nip = "Invalid"
+        else:
+            self.nip = nip
+    def transfer(self, kwota):
+        if kwota + self.balance >= 0:
+            self.balance += kwota
