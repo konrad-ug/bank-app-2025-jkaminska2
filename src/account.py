@@ -13,6 +13,9 @@ class Account:
     def transfer(self, kwota):
         if kwota + self.balance >= 0:
             self.balance += kwota
+    def przelewekspresowy(self, kwota):
+        if self.balance - kwota >= 0:
+            self.balance = self.balance - kwota - 1
 class BusinessAccount:
     def __init__(self, company_name, nip, balance = 0):
         self.company_name = company_name
@@ -24,3 +27,6 @@ class BusinessAccount:
     def transfer(self, kwota):
         if kwota + self.balance >= 0:
             self.balance += kwota
+    def przelewekspresowy(self, kwota):
+        if self.balance - kwota >= 0:
+            self.balance = self.balance - kwota - 5

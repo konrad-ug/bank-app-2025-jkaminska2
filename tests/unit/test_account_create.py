@@ -24,14 +24,22 @@ class TestAccount:
         assert account2.balance == 0
 class TestTransfer:
     def test_transfer(self):
-        account = Account("John", "Doe", "93857264539",None, 5000)
+        account = Account("John", "Doe", "93857264539", None, 5000)
         account.transfer(500)
         assert account.balance == 5500
         account.transfer(-5600)
         assert account.balance == 5500
+    def test_przelew_ekspresowy(self):
+        account = Account("John", "Doe", "93857264539", None, 5000)
+        account.przelewekspresowy(800)
+        assert account.balance == 4199
 class TestBusinessAccount:
     def test_account(self):
         bus_account = BusinessAccount("Nazwa_firmy", "594837236", 800)
         assert bus_account.nip == "Invalid"
         bus_account.transfer(-500)
         assert bus_account.balance == 300
+    def test_przelew_ekspresowy(self):
+        bus_account = BusinessAccount("Nazwa_firmy", "5948372366", 800)
+        bus_account.przelewekspresowy(800)
+        assert bus_account.balance == -5
