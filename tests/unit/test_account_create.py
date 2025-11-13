@@ -33,6 +33,7 @@ class TestTransfer:
         account = Account("John", "Doe", "93857264539", None, 5000)
         account.przelewekspresowy(800)
         assert account.balance == 4199
+        assert account.history == [-800, -1]
 class TestBusinessAccount:
     def test_account(self):
         bus_account = BusinessAccount("Nazwa_firmy", "594837236", 800)

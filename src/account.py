@@ -4,6 +4,7 @@ class Account:
         self.last_name = last_name
         self.balance = balance
         self.kod = kod
+        self.history = []
         if isinstance(pesel,str) and len(pesel) != 11:
             self.pesel = "Invalid"
         else:
@@ -13,13 +14,16 @@ class Account:
     def transfer(self, kwota):
         if kwota + self.balance >= 0:
             self.balance += kwota
+            self.history.append(kwota)
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 1
+            self.history.append(-1)
 class BusinessAccount:
     def __init__(self, company_name, nip, balance = 0):
         self.company_name = company_name
         self.balance = balance
+        self.history = []
         if len(nip) != 10:
             self.nip = "Invalid"
         else:
@@ -27,6 +31,8 @@ class BusinessAccount:
     def transfer(self, kwota):
         if kwota + self.balance >= 0:
             self.balance += kwota
+            self.history.append(kwota)
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 5
+            self.history.append(-5)
