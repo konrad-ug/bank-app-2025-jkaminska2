@@ -36,4 +36,10 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Unit tests
       run: |
-        python -m pytest
+        python -m coverage run --source=src -m pytest
+    - name: Coverage
+      run: |
+        python -m coverage report
+    - name: Red pipeline
+      run: |
+        python -m coverage report -m --fail-under=100
