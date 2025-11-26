@@ -51,7 +51,7 @@ class TestTransfer:
     def test_kredyt3(self,sample_account):
         sample_account.transfer(800)
         sample_account.transfer(800)
-        sample_account.transfer(800)
+        sample_account.transfer(-800)
         sample_account.transfer(5600)
         sample_account.transfer(5600)
         assert sample_account.submit_for_loan(10000) == True
@@ -67,6 +67,8 @@ class TestBusinessAccount:
         assert sample_business_account.nip == "Invalid"
         sample_business_account.transfer(-500)
         assert sample_business_account.balance == 300
+        bus_account = BusinessAccount("Nazwa","8574635241")
+        assert bus_account.nip == "8574635241"
     def test_przelew_ekspresowy(self,sample_business_account):
         sample_business_account.przelewekspresowy(800)
         assert sample_business_account.balance == -5
