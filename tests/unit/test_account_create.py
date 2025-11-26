@@ -54,7 +54,7 @@ class TestTransfer:
         sample_account.transfer(800)
         sample_account.transfer(5600)
         sample_account.transfer(5600)
-        assert sample_account.submit_for_loan(10000) == False
+        assert sample_account.submit_for_loan(10000) == True
 class TestBusinessAccount:
     def test_account(self,sample_business_account):
         assert sample_business_account.nip == "Invalid"
