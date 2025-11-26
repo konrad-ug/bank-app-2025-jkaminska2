@@ -18,6 +18,7 @@ class Account:
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 1
+            self.history.append(kwota * -1)
             self.history.append(-1)
 class BusinessAccount:
     def __init__(self, company_name, nip, balance = 0):
@@ -35,4 +36,5 @@ class BusinessAccount:
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 5
+            self.history.append(kwota * -1)
             self.history.append(-5)
