@@ -22,7 +22,7 @@ class Account:
             self.history.append(-1)
     def submit_for_loan(self, amount):
         if (len(self.history)>=3 and self.history[-1]>0 and self.history[-2]>0 and self.history[-3]>0) or (len(self.history)>=5 and self.history[-1]+self.history[-2]+self.history[-3]+self.history[-4]+self.history[-5] > amount):
-            self.balance =+ amount
+            self.balance += amount
             return True
         else:
             return False
