@@ -1,4 +1,4 @@
-from src.account import Account, BusinessAccount
+from src.account import Account, BusinessAccount, AccountRegistry
 import pytest
 @pytest.fixture
 def sample_account():
@@ -8,6 +8,9 @@ def sample_account():
 def sample_business_account():
     bus_account = BusinessAccount("Nazwa_firmy", "594837236", 800)
     return bus_account
+@pytest.fixture
+def sample_registry():
+    return AccountRegistry()
 
 class TestAccount:
     def test_account_creation(self, sample_account):
@@ -80,3 +83,9 @@ class TestBusinessAccount:
         sample_business_account.transfer(10000)
         sample_business_account.transfer(-1775)
         assert sample_business_account.take_loan(400000) == False
+class TestAccountRegistry:
+    def test_accounts(self,sample_account,sample_registry):
+        sample_registry.add_account(sample_account)
+        assert sample_registry.search_account("93857264539") == ["John", "Doe",5000]
+        assert sample_registry.search_account("93857264530") == []
+        assert sample_registry.accounts_counter() == 1
