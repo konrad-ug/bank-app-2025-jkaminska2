@@ -20,12 +20,20 @@ class Account:
             self.balance = self.balance - kwota - 1
             self.history.append(kwota * -1)
             self.history.append(-1)
-    def submit_for_loan(self, amount):
-        if (len(self.history)>=3 and self.history[-1]>0 and self.history[-2]>0 and self.history[-3]>0) or (len(self.history)>=5 and self.history[-1]+self.history[-2]+self.history[-3]+self.history[-4]+self.history[-5] > amount):
+    def _condition1(self):
+        if len(self.history) >= 3 and self.history[-1] > 0 and self.history[-2] > 0 and self.history[-3] > 0:
+            return True
+        return False
+    def _condition2(self):
+        if len(self.history) >= 5 and self.history[-1] + self.history[-2] + self.history[-3] + self.history[-4] + \
+                self.history[-5] > amount:
+            return True
+        return False
+    def submit_for_loan(self,amount):
+        if self._condition1()==True or self._condition2()==True:
             self.balance += amount
             return True
-        else:
-            return False
+        return False
 class BusinessAccount:
     def __init__(self, company_name, nip, balance = 0):
         self.company_name = company_name
