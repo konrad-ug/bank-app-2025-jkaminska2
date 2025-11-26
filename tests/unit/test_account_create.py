@@ -40,6 +40,10 @@ class TestTransfer:
         account.transfer(5600)
         account.transfer(100)
         assert account.submit_for_loan(10000) == True
+        account2 = Account("John", "Doe", "93857264539", None, 5000)
+        account2.transfer(800)
+        account2.transfer(5600)
+        assert account2.submit_for_loan(10000) == False
 class TestBusinessAccount:
     def test_account(self):
         bus_account = BusinessAccount("Nazwa_firmy", "594837236", 800)
