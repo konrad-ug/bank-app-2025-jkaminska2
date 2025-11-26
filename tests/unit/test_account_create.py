@@ -72,3 +72,11 @@ class TestBusinessAccount:
     def test_przelew_ekspresowy(self,sample_business_account):
         sample_business_account.przelewekspresowy(800)
         assert sample_business_account.balance == -5
+    def test_take_loan(self,sample_business_account):
+        sample_business_account.transfer(100000)
+        sample_business_account.transfer(-1775)
+        assert sample_business_account.take_loan(4000) == True
+    def test_take_loan2(self,sample_business_account):
+        sample_business_account.transfer(10000)
+        sample_business_account.transfer(-1775)
+        assert sample_business_account.take_loan(400000) == False

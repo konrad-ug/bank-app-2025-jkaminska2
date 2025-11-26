@@ -31,6 +31,7 @@ class Account:
     def submit_for_loan(self,amount):
         if self._condition1()==True or self._condition2(amount)==True:
             self.balance += amount
+            self.history.append(amount)
             return True
         return False
 class BusinessAccount:
@@ -51,3 +52,9 @@ class BusinessAccount:
             self.balance = self.balance - kwota - 5
             self.history.append(kwota * -1)
             self.history.append(-5)
+    def take_loan(self,amount):
+        if self.balance >= amount * 2 and -1775 in self.history:
+            self.balance += amount
+            self.history.append(amount)
+            return True
+        return False
