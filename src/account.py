@@ -58,3 +58,17 @@ class BusinessAccount:
             self.history.append(amount)
             return True
         return False
+class AccountRegistry:
+    def __init__(self):
+        self.accounts=[]
+    def add_account(self,account: Account):
+        self.accounts.append(account)
+    def search_account(self,pesel):
+        for account in self.accounts:
+            if account.pesel == pesel:
+                return [account.first_name, account.last_name, account.balance]
+        return []
+    def accounts_list(self):
+        return self.accounts
+    def accounts_counter(self):
+        return len(self.accounts)
