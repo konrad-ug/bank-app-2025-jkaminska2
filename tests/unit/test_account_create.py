@@ -89,3 +89,4 @@ class TestAccountRegistry:
         assert sample_registry.search_account("93857264539") == ["John", "Doe",5000]
         assert sample_registry.search_account("93857264530") == []
         assert sample_registry.accounts_counter() == 1
+        assert sample_registry.accounts_list() == [sample_account]

@@ -68,7 +68,7 @@ class AccountRegistry:
             if account.pesel == pesel:
                 return [account.first_name, account.last_name, account.balance]
         return []
-    def accounts(self):
+    def accounts_list(self):
         return self.accounts
     def accounts_counter(self):
         return len(self.accounts)
