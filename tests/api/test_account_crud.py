@@ -38,3 +38,7 @@ class TestAPI:
         client.post("/api/accounts", json=sample_account)
         r = client.delete("/api/accounts/65748392832")
         assert r.status_code == 200
+    def test_unique_pesel(self, client, sample_account):
+        client.post("/api/accounts", json=sample_account)
+        r = client.post("/api/accounts", json=sample_account)
+        assert r.status_code == 409
