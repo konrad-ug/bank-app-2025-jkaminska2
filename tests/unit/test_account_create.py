@@ -86,7 +86,7 @@ class TestBusinessAccount:
 class TestAccountRegistry:
     def test_accounts(self,sample_account,sample_registry):
         sample_registry.add_account(sample_account)
-        assert sample_registry.search_account("93857264539") == ["John", "Doe",5000]
-        assert sample_registry.search_account("93857264530") == []
+        assert sample_registry.search_account("93857264539").first_name == "John"
+        assert sample_registry.search_account("93857264530") is None
         assert sample_registry.accounts_counter() == 1
         assert sample_registry.accounts_list() == [sample_account]
