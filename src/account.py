@@ -11,15 +11,23 @@ class Account:
             self.pesel = pesel
         if isinstance(kod,str) and kod.startswith("PROM_") and self.pesel != "Invalid" and (int(self.pesel[:2]) > 60 or int(self.pesel[:2]) <= 7):
             self.balance += 50
-    def transfer(self, kwota):
-        if kwota + self.balance >= 0:
-            self.balance += kwota
-            self.history.append(kwota)
+    def incoming(self, kwota):
+        self.balance += kwota
+        self.history.append(kwota)
+        return True
+    def outgoing(self, kwota):
+        if self.balance - kwota >= 0:
+            self.balance -= kwota
+            self.history.append(kwota * -1)
+            return True
+        return False
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 1
             self.history.append(kwota * -1)
             self.history.append(-1)
+            return True
+        return False
     def _condition1(self):
         if len(self.history) >= 3 and self.history[-1] > 0 and self.history[-2] > 0 and self.history[-3] > 0:
             return True
@@ -43,15 +51,23 @@ class BusinessAccount:
             self.nip = "Invalid"
         else:
             self.nip = nip
-    def transfer(self, kwota):
-        if kwota + self.balance >= 0:
-            self.balance += kwota
-            self.history.append(kwota)
+    def incoming(self, kwota):
+        self.balance += kwota
+        self.history.append(kwota)
+        return True
+    def outgoing(self, kwota):
+        if self.balance - kwota >= 0:
+            self.balance -= kwota
+            self.history.append(kwota * -1)
+            return True
+        return False
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 5
             self.history.append(kwota * -1)
             self.history.append(-5)
+            return True
+        return False
     def take_loan(self,amount):
         if self.balance >= amount * 2 and -1775 in self.history:
             self.balance += amount
