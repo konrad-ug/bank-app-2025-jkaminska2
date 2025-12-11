@@ -42,6 +42,7 @@ class TestTransfer:
         sample_account.przelewekspresowy(800)
         assert sample_account.balance == 4199
         assert sample_account.history == [-800, -1]
+        assert sample_account.przelewekspresowy(8000000) == False
     def test_kredyt1(self,sample_account):
         sample_account.incoming(800)
         sample_account.incoming(5600)
@@ -75,6 +76,9 @@ class TestBusinessAccount:
     def test_przelew_ekspresowy(self,sample_business_account):
         sample_business_account.przelewekspresowy(800)
         assert sample_business_account.balance == -5
+        assert sample_business_account.przelewekspresowy(800) == False
+    def test_transfer(self, sample_business_account):
+        assert sample_business_account.outgoing(8000000) == False
     def test_take_loan(self,sample_business_account):
         sample_business_account.incoming(100000)
         sample_business_account.outgoing(1775)
