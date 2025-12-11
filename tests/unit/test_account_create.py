@@ -54,7 +54,7 @@ class TestTransfer:
     def test_kredyt3(self,sample_account):
         sample_account.incoming(800)
         sample_account.incoming(800)
-        sample_account.outcoming(800)
+        sample_account.outgoing(800)
         sample_account.incoming(5600)
         sample_account.incoming(5600)
         assert sample_account.submit_for_loan(10000) == True
@@ -63,12 +63,12 @@ class TestTransfer:
         sample_account.incoming(800)
         sample_account.incoming(800)
         sample_account.incoming(560)
-        sample_account.outcoming(560)
+        sample_account.outgoing(560)
         assert sample_account.submit_for_loan(1000000) == False
 class TestBusinessAccount:
     def test_account(self,sample_business_account):
         assert sample_business_account.nip == "Invalid"
-        sample_business_account.outcoming(500)
+        sample_business_account.outgoing(500)
         assert sample_business_account.balance == 300
         bus_account = BusinessAccount("Nazwa","8574635241")
         assert bus_account.nip == "8574635241"
@@ -77,11 +77,11 @@ class TestBusinessAccount:
         assert sample_business_account.balance == -5
     def test_take_loan(self,sample_business_account):
         sample_business_account.incoming(100000)
-        sample_business_account.outcoming(1775)
+        sample_business_account.outgoing(1775)
         assert sample_business_account.take_loan(4000) == True
     def test_take_loan2(self,sample_business_account):
         sample_business_account.incoming(10000)
-        sample_business_account.outcoming(1775)
+        sample_business_account.outgoing(1775)
         assert sample_business_account.take_loan(400000) == False
 class TestAccountRegistry:
     def test_accounts(self,sample_account,sample_registry):

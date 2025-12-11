@@ -15,7 +15,7 @@ class Account:
         self.balance += kwota
         self.history.append(kwota)
         return True
-    def outcoming(self, kwota):
+    def outgoing(self, kwota):
         if self.balance - kwota >= 0:
             self.balance -= kwota
             self.history.append(kwota * -1)
@@ -55,7 +55,7 @@ class BusinessAccount:
         self.balance += kwota
         self.history.append(kwota)
         return True
-    def outcoming(self, kwota):
+    def outgoing(self, kwota):
         if self.balance - kwota >= 0:
             self.balance -= kwota
             self.history.append(kwota * -1)

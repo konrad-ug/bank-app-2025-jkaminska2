@@ -64,3 +64,16 @@ def transfer(pesel):
     if account is None:
         return jsonify({"error": "Not found"}), 404
     data = request.get_json()
+    if "type" not in data or "amount" not in data:
+        return jsonify({"error": "Not found"}), 404
+    if data["type"] == "incoming":
+        result = account.incoming(data["amount"])
+    elif data["type"] == "outgoing":
+        result = account.outgoing(data["amount"])
+    elif data["type"] == "express":
+        result = account.przelewekspresowy(data["amount"])
+    else:
+        return jsonify({"error": "Not found"}), 404
+    if result is False:
+        return jsonify({"error": "Unprocessable Content"}), 422
+    return jsonify({"message": "Zlecenie przyjęto do realizacji"}), 200
