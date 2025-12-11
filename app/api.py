@@ -56,3 +56,11 @@ def delete_account(pesel):
         return jsonify({"error": "Not found"}), 404
     registry.accounts.remove(account)
     return jsonify({"message": "Account deleted"}), 200
+
+@app.route("/api/accounts/<pesel>/transfer", methods=['POST'])
+def transfer(pesel):
+    print("Transfer request received")
+    account = registry.search_account(pesel)
+    if account is None:
+        return jsonify({"error": "Not found"}), 404
+    data = request.get_json()

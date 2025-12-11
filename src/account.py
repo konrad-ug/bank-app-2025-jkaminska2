@@ -14,15 +14,20 @@ class Account:
     def incoming(self, kwota):
         self.balance += kwota
         self.history.append(kwota)
+        return True
     def outcoming(self, kwota):
         if self.balance - kwota >= 0:
             self.balance -= kwota
             self.history.append(kwota * -1)
+            return True
+        return False
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 1
             self.history.append(kwota * -1)
             self.history.append(-1)
+            return True
+        return False
     def _condition1(self):
         if len(self.history) >= 3 and self.history[-1] > 0 and self.history[-2] > 0 and self.history[-3] > 0:
             return True
@@ -49,15 +54,20 @@ class BusinessAccount:
     def incoming(self, kwota):
         self.balance += kwota
         self.history.append(kwota)
+        return True
     def outcoming(self, kwota):
         if self.balance - kwota >= 0:
             self.balance -= kwota
             self.history.append(kwota * -1)
+            return True
+        return False
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 5
             self.history.append(kwota * -1)
             self.history.append(-5)
+            return True
+        return False
     def take_loan(self,amount):
         if self.balance >= amount * 2 and -1775 in self.history:
             self.balance += amount
