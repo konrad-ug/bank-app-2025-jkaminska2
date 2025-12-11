@@ -11,10 +11,13 @@ class Account:
             self.pesel = pesel
         if isinstance(kod,str) and kod.startswith("PROM_") and self.pesel != "Invalid" and (int(self.pesel[:2]) > 60 or int(self.pesel[:2]) <= 7):
             self.balance += 50
-    def transfer(self, kwota):
-        if kwota + self.balance >= 0:
-            self.balance += kwota
-            self.history.append(kwota)
+    def incoming(self, kwota):
+        self.balance += kwota
+        self.history.append(kwota)
+    def outcoming(self, kwota):
+        if self.balance - kwota >= 0:
+            self.balance -= kwota
+            self.history.append(kwota * -1)
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 1
@@ -43,10 +46,13 @@ class BusinessAccount:
             self.nip = "Invalid"
         else:
             self.nip = nip
-    def transfer(self, kwota):
-        if kwota + self.balance >= 0:
-            self.balance += kwota
-            self.history.append(kwota)
+    def incoming(self, kwota):
+        self.balance += kwota
+        self.history.append(kwota)
+    def outcoming(self, kwota):
+        if self.balance - kwota >= 0:
+            self.balance -= kwota
+            self.history.append(kwota * -1)
     def przelewekspresowy(self, kwota):
         if self.balance - kwota >= 0:
             self.balance = self.balance - kwota - 5

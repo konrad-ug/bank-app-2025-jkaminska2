@@ -34,41 +34,41 @@ class TestAccount:
         account2 = Account("Jane", "Doe", "50857264539", "PROM_fjds")
         assert account2.balance == 0
 class TestTransfer:
-    @pytest.mark.parametrize("input,expected", [(1000, 6000), (-500, 4500), (0, 5000)])
+    @pytest.mark.parametrize("input,expected", [(1000, 6000), (0, 5000)])
     def test_transfer(self,sample_account,input,expected):
-        sample_account.transfer(input)
+        sample_account.incoming(input)
         assert sample_account.balance == expected
     def test_przelew_ekspresowy(self,sample_account):
         sample_account.przelewekspresowy(800)
         assert sample_account.balance == 4199
         assert sample_account.history == [-800, -1]
     def test_kredyt1(self,sample_account):
-        sample_account.transfer(800)
-        sample_account.transfer(5600)
-        sample_account.transfer(100)
+        sample_account.incoming(800)
+        sample_account.incoming(5600)
+        sample_account.incoming(100)
         assert sample_account.submit_for_loan(10000) == True
     def test_kredyt2(self,sample_account):
-        sample_account.transfer(800)
-        sample_account.transfer(5600)
+        sample_account.incoming(800)
+        sample_account.incoming(5600)
         assert sample_account.submit_for_loan(10000) == False
     def test_kredyt3(self,sample_account):
-        sample_account.transfer(800)
-        sample_account.transfer(800)
-        sample_account.transfer(-800)
-        sample_account.transfer(5600)
-        sample_account.transfer(5600)
+        sample_account.incoming(800)
+        sample_account.incoming(800)
+        sample_account.outcoming(800)
+        sample_account.incoming(5600)
+        sample_account.incoming(5600)
         assert sample_account.submit_for_loan(10000) == True
     def test_kredyt4(self,sample_account):
-        sample_account.transfer(800)
-        sample_account.transfer(800)
-        sample_account.transfer(800)
-        sample_account.transfer(560)
-        sample_account.transfer(-560)
+        sample_account.incoming(800)
+        sample_account.incoming(800)
+        sample_account.incoming(800)
+        sample_account.incoming(560)
+        sample_account.outcoming(560)
         assert sample_account.submit_for_loan(1000000) == False
 class TestBusinessAccount:
     def test_account(self,sample_business_account):
         assert sample_business_account.nip == "Invalid"
-        sample_business_account.transfer(-500)
+        sample_business_account.outcoming(500)
         assert sample_business_account.balance == 300
         bus_account = BusinessAccount("Nazwa","8574635241")
         assert bus_account.nip == "8574635241"
@@ -76,12 +76,12 @@ class TestBusinessAccount:
         sample_business_account.przelewekspresowy(800)
         assert sample_business_account.balance == -5
     def test_take_loan(self,sample_business_account):
-        sample_business_account.transfer(100000)
-        sample_business_account.transfer(-1775)
+        sample_business_account.incoming(100000)
+        sample_business_account.outcoming(1775)
         assert sample_business_account.take_loan(4000) == True
     def test_take_loan2(self,sample_business_account):
-        sample_business_account.transfer(10000)
-        sample_business_account.transfer(-1775)
+        sample_business_account.incoming(10000)
+        sample_business_account.outcoming(1775)
         assert sample_business_account.take_loan(400000) == False
 class TestAccountRegistry:
     def test_accounts(self,sample_account,sample_registry):
