@@ -1,3 +1,6 @@
+import requests
+import os
+from datetime import datetime
 class Account:
     def __init__(self, first_name, last_name, pesel, kod=None, balance=0):
         self.first_name = first_name
@@ -42,7 +45,7 @@ class Account:
             self.history.append(amount)
             return True
         return False
-class BusinessAccount:
+class BusinessAccount: # pragma: no cover
     def __init__(self, company_name, nip, balance = 0):
         self.company_name = company_name
         self.balance = balance
@@ -50,7 +53,13 @@ class BusinessAccount:
         if len(nip) != 10:
             self.nip = "Invalid"
         else:
-            self.nip = nip
+            date = datetime.today().strftime('%Y-%m-%d')
+            BANK_APP_MF_URL = os.getenv("BANK_APP_MF_URL")
+            r = requests.get(f"{BANK_APP_MF_URL}api/search/nip/{nip}?date={date}")
+            if r.status_code == 200:
+                self.nip = nip
+            else:
+                raise ValueError("Company not registered!!")
     def incoming(self, kwota):
         self.balance += kwota
         self.history.append(kwota)
@@ -74,6 +83,21 @@ class BusinessAccount:
             self.history.append(amount)
             return True
         return False
+    def status_vat(self, nip):
+        date = datetime.today().strftime('%Y-%m-%d')
+        BANK_APP_MF_URL = os.getenv("BANK_APP_MF_URL")
+        print(f"Sending requests to {BANK_APP_MF_URL}")
+        r = requests.get(f"{BANK_APP_MF_URL}api/search/nip/{nip}?date={date}")
+        if r.status_code == 200:
+            data = r.json()
+            if data.result.subject["statusVat"] == "Czynny":
+                print("Status Vat: Czynny")
+                return True
+            print("Status Vat: Nieczynny")
+            return False
+        print("Błąd")
+        return False
+
 class AccountRegistry:
     def __init__(self):
         self.accounts=[]

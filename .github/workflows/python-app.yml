@@ -16,6 +16,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      BANK_APP_MF_URL: https://wl-test.mf.gov.pl/
+      FLASK_ENV: test
 
     steps:
     - uses: actions/checkout@v4

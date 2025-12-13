@@ -1,11 +1,17 @@
 from src.account import Account, BusinessAccount, AccountRegistry
 import pytest
+from pytest_mock import MockFixture
 @pytest.fixture
 def sample_account():
     account = Account("John", "Doe", "93857264539", None, 5000)
     return account
 @pytest.fixture
-def sample_business_account():
+def sample_business_account(mocker):
+    mock = mocker.patch("src.account.requests.get")
+    mock.return_value.status_code = 200
+    mock.return_value.json.return_value = {
+        "result": {"subject": {"statusVat": "Czynny"}}
+    }
     bus_account = BusinessAccount("Nazwa_firmy", "594837236", 800)
     return bus_account
 @pytest.fixture
@@ -67,12 +73,6 @@ class TestTransfer:
         sample_account.outgoing(560)
         assert sample_account.submit_for_loan(1000000) == False
 class TestBusinessAccount:
-    def test_account(self,sample_business_account):
-        assert sample_business_account.nip == "Invalid"
-        sample_business_account.outgoing(500)
-        assert sample_business_account.balance == 300
-        bus_account = BusinessAccount("Nazwa","8574635241")
-        assert bus_account.nip == "8574635241"
     def test_przelew_ekspresowy(self,sample_business_account):
         sample_business_account.przelewekspresowy(800)
         assert sample_business_account.balance == -5
@@ -87,6 +87,21 @@ class TestBusinessAccount:
         sample_business_account.incoming(10000)
         sample_business_account.outgoing(1775)
         assert sample_business_account.take_loan(400000) == False
+    def test_create_company_account(self, mocker: MockFixture):
+        mock = mocker.patch("src.account.requests.get")
+        mock.return_value.status_code = 200
+        mock.return_value.json.return_value = {
+            "result": {"subject": {"statusVat": "Czynny"}}
+        }
+        account = BusinessAccount("Nazwa","8461627563")
+        assert account.company_name == "Nazwa"
+        assert account.balance == 0
+        assert account.nip == "8461627563"
+    def test_business_account_invalid_nip(self, mocker):
+        mock = mocker.patch("src.account.requests.get")
+        mock.return_value.status_code = 404
+        with pytest.raises(ValueError, match="Company not registered!!"):
+            BusinessAccount("Firma", "1111111111")
 class TestAccountRegistry:
     def test_accounts(self,sample_account,sample_registry):
         sample_registry.add_account(sample_account)
