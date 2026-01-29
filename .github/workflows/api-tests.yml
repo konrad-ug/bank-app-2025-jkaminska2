@@ -24,7 +24,7 @@ jobs:
           --health-cmd="mongosh --eval 'db.runCommand({ ping: 1 })'"
           --health-interval=10s
           --health-timeout=5s
-          --helath-retries=5
+          --health-retries=5
 
     steps:
     - name: Checkout repository
