@@ -59,6 +59,30 @@ class Account:
         smtp = SMTPClient()
         return smtp.send(subject, text, email)
 
+    @staticmethod
+    def from_dict(data):
+        data = dict(data)
+        data.pop("_id", None)
+        acc = Account(
+            first_name=data["first_name"],
+            last_name=data["last_name"],
+            pesel=data["pesel"],
+            balance=data.get("balance", 0),
+            kod=data.get("kod")
+        )
+        acc.history = data.get("history", [])
+        return acc
+
+    def to_dict(self):
+        return {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "pesel": self.pesel,
+            "balance": self.balance,
+            "history": self.history,
+            "kod": self.kod
+        }
+
 class BusinessAccount: # pragma: no cover
     def __init__(self, company_name, nip, balance = 0):
         self.company_name = company_name
